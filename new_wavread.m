@@ -1,4 +1,4 @@
-function y=new_wavread()
+function [data, fs, nbits] = new_wavread(filename, additional1, additional2)
 % function to do something usefull (fill out)
 % Usage y=new_wavread()
 % Input Parameter:
@@ -16,6 +16,60 @@ function y=new_wavread()
 
 %------------Your function implementation here--------------------------- 
 
+
+
+switch nargin
+    case 2
+        additional2 = [];
+
+    case 1
+        additional1 = [];
+        additional2 = [];
+end
+if isempty(strfind(filename, '.wav'))
+    filename = strcat(filename, '.wav');  
+end
+nbits = audioinfo(filename);
+nbits = nbits.BitsPerSample;
+
+if isempty(additional1) && isempty(additional2)
+    [data, fs] = audioread(filename);
+       
+end  
+  
+if isempty(additional2) && isa(additional1, 'char')
+    
+    if strcmp(additional1, 'size')
+       siz = audioinfo(filename); 
+       data = [siz.TotalSamples siz.NumChannels];
+       fs = siz.SampleRate;
+       
+    end
+    
+    
+    if strcmp(additional1, 'native') || strcmp(additional1, 'double')
+        [data, fs]=audioread(filename, additional1);
+        
+        
+    end
+end
+if  isa(additional1,'double') && (length(additional1)<=2)
+    
+    if length(additional1)==1 
+        additional1=[1 additional1];
+    end
+    if isempty(additional2)
+        [data, fs]=audioread(filename,additional1);
+    else
+        [data, fs]=audioread(filename,additional1,additional2);
+    end
+    
+end
+   
+        
+        
+
+end
 
 
 
