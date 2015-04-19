@@ -1,0 +1,11 @@
+new_wav
+
+Funktionen zum ersetzen von wavread und wavwrite auf Basis von audioread und
+audiowrite.
+
+Inputkontrolle
+  -menge der Inputs
+  -abfragen was in übergeben Variblen steht und dementsprechende verarbeitung
+   unter berücksichtigung der menge der Outputs.
+
+Outputkontrolle
