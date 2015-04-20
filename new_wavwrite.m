@@ -1,35 +1,40 @@
 function new_wavwrite(data,fs,additional1,additional2)
-% function to do something usefull (fill out)
-% Usage new_wavwrite(data,fs,additional1,additional2)
+% alternative to wavwrite command with same syntax by using audiowrite
+% Usage new_wavwrite(data, fs, filename/nbits, filename)
 % Input Parameter:
-%	 in_param: 		 Explain the parameter, default values, and units
+%	data:           audio data vector
+%   fs:             sampling rate (double)
+%   additional1:    if 3 inputs it is the filename (string)
+%                   if 4 inputs it is bits per sample (double)
+%   additional2:    the filname by 4 inputs
 % 
-%------------------------------------------------------------------------ 
-% Example: Provide example here if applicable (one or two lines) 
+%------------------------------------------------------------------------  
 
 % Author: Nils L. Westhausen (c) TGM @ Jade Hochschule applied licence see EOF 
-% Source: If the function is based on a scientific paper or a web site, 
-%         provide the citation detail here (with equation no. if applicable)  
+% 
 % Version History:
-% Ver. 0.01 initial create (empty) 13-Apr-2015  Initials (eg. JB)
+% Ver. 0.01 initial create (empty) 13-Apr-2015  NW
+% Ver. 0.80 first implemntation    10-Apr-2015  NW
 
-%------------Your function implementation here--------------------------- 
+%-------------------------------------------------------------------------- 
 switch nargin
     case 1
         error('myApp:argChk', 'not enough input arguments')
     case 2
-        error('myApp:argChk', 'It is fs needed for writing wav-file')
+        error('myApp:argChk', 'It is sampling-rate needed for writing wav-file')
     case 3
         additional2 = [];
+        % checks if .wav extension exists in filename and add it if not
         if isempty(strfind(additional1, '.wav'))
             additional1 = strcat(additional1, '.wav'); 
         end
-        audiowrite(additional1,data,fs)
+        % use of audiowrite
+        audiowrite(additional1, data ,fs)
     case 4
         if isempty(strfind(additional2, '.wav'))
             additional2 = strcat(additional2, '.wav'); 
         end
-        audiowrite(additional2,data,fs,'BitsPerSample',additional1) 
+        audiowrite(additional2, data, fs, 'BitsPerSample', additional1) 
 end
 
 %--------------------Licence ---------------------------------------------
