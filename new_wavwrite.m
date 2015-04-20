@@ -1,10 +1,9 @@
-function y = new_wavwrite()
+function new_wavwrite(data,fs,additional1,additional2)
 % function to do something usefull (fill out)
-% Usage y=new_wavwrite()
+% Usage new_wavwrite(data,fs,additional1,additional2)
 % Input Parameter:
 %	 in_param: 		 Explain the parameter, default values, and units
-% Output Parameter:
-%	 out_param: 	 Explain the parameter, default values, and units
+% 
 %------------------------------------------------------------------------ 
 % Example: Provide example here if applicable (one or two lines) 
 
@@ -15,9 +14,23 @@ function y = new_wavwrite()
 % Ver. 0.01 initial create (empty) 13-Apr-2015  Initials (eg. JB)
 
 %------------Your function implementation here--------------------------- 
-
-
-
+switch nargin
+    case 1
+        error('myApp:argChk', 'not enough input arguments')
+    case 2
+        error('myApp:argChk', 'It is fs needed for writing wav-file')
+    case 3
+        additional2 = [];
+        if isempty(strfind(additional1, '.wav'))
+            additional1 = strcat(additional1, '.wav'); 
+        end
+        audiowrite(additional1,data,fs)
+    case 4
+        if isempty(strfind(additional2, '.wav'))
+            additional2 = strcat(additional2, '.wav'); 
+        end
+        audiowrite(additional2,data,fs,'BitsPerSample',additional1) 
+end
 
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Nils L. Westhausen
