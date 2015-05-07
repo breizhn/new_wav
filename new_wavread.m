@@ -13,7 +13,7 @@ function [data, fs, nbits, opt] = new_wavread(filename, additional1, additional2
 %   data:           vector of audiodata of the wav-file
 %   fs:             sampling frequencie (double) of the wav-file
 %   nbits:          pits per sample (double) of the wav-file
-%   opt:            returns an error if wnated
+%   opt:            returns an error if called
 %------------------------------------------------------------------------ 
 
 % Author: Nils L. Westhausen (c) TGM @ Jade Hochschule applied licence see EOF 
@@ -26,7 +26,7 @@ function [data, fs, nbits, opt] = new_wavread(filename, additional1, additional2
 
 % return error if output opt exists
 if nargout==4
-    error('myApp:argChk', 'struct opt is not implemented')
+    error('myApp:INargChk', 'struct opt is not implemented')
 end
 
 % sets the not inserted arguments to an empty array
@@ -70,7 +70,8 @@ if isempty(additional2) && isa(additional1, 'char')
         
     end
 end
-if  isa(additional1,'double') && (length(additional1)<=2)
+if  isa(additional1,'double') && (length(additional1)<=2) &&...
+                                                not(isempty(additional1))
     
     if length(additional1)==1 
         additional1=[1 additional1];

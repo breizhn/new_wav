@@ -1,6 +1,7 @@
 function new_wavwrite(data,fs,additional1,additional2)
 % alternative to wavwrite command with same syntax by using audiowrite
 % Usage new_wavwrite(data, fs, filename/nbits, filename)
+% It can't used without fs unlike the "old" wavwrite.
 % Input Parameter:
 %	data:           audio data vector
 %   fs:             sampling rate (double)
@@ -19,9 +20,9 @@ function new_wavwrite(data,fs,additional1,additional2)
 %-------------------------------------------------------------------------- 
 switch nargin
     case 1
-        error('myApp:argChk', 'not enough input arguments')
+        error('myApp:argChk1', 'not enough input arguments')
     case 2
-        error('myApp:argChk', 'It is sampling-rate needed for writing wav-file')
+        error('myApp:argChk2', 'It is sampling-rate needed for writing wav-file')
     case 3
         additional2 = [];
         % checks if .wav extension exists in filename and add it if not
