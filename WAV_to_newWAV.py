@@ -1,9 +1,45 @@
+'''
+Author:  Nils Laurens Westhausen
+
+Version: 0.9    08.05.15
+
+
+
+
+
+This script searches for .m files in your cwd and its
+subfolders and tries to find and replace wavwrite and wavread with
+new_wavwrite and new_wavread commands.
+There is a log-file created in your cwd with all changes.
+
+Please only use it if you know what your're doing.
+It is recommended to make an backup of the files you want to change.
+
+'''
 
 import re
 import os
 import glob
 import time
 
+
+
+def searching_file_name_exeption(file_path):
+    '''
+    Returns True if there is a needed file in file_path
+    in: file_patch (list)
+    out: boolean
+    '''
+    exceptions = ['new_wavread.m', 'new_wavreadTest.m', 'new_wavwrite.m',\
+                                                   'new_wavwriteTest.m']
+    #found_exeption = False
+
+    for exept in exceptions:
+        for path in file_path:
+            if exept in path:
+                return True
+
+    return False
 
 
 def search_for_m ():
@@ -16,7 +52,13 @@ def search_for_m ():
     current_path = os.getcwd()
     m_files_directories = []
     for root, dirnames, filenames in os.walk(current_path):
-        m_files_directories.extend(glob.glob(root + "/*.m"))
+        m_path = glob.glob(root + "/*.m")
+
+        if searching_file_name_exeption(m_path):
+
+            continue
+
+        m_files_directories.extend(m_path)
 
     return m_files_directories,current_path
 
@@ -53,7 +95,8 @@ def is_wav_thing_anywhere(path_m_file):
     '''
     with open(path_m_file, 'r') as m_file:
         content = m_file.read()
-        if (wav_r in content) or (wav_w in content):
+        if (('wavread' in content) and (not 'new_wavread' in content)) or \
+            (('wavwrite' in content) and (not 'new_wavwrite' in content)):
 
             return True
         else:
@@ -72,10 +115,10 @@ def is_a_wav_left (new_file, log_file):
     wavr_left_line = []
     wavw_left_line = []
     for idx, new_line in enumerate(new_lines):
-        if 'wavread' in new_line:
-            wavr_left_line.append(idx)
-        if 'wavwrite' in new_line:
-            wavw_left_line.append(idx)
+        if ('wavread' in new_line) and (not 'new_wavread' in new_line):
+            wavr_left_line.append(idx+1)
+        if ('wavwrite' in new_line) and (not 'new_wavwrite' in new_line):
+            wavw_left_line.append(idx+1)
     if wavr_left_line != [] :
         log_file += ('     ' + str(len(wavr_left_line)) + \
         ' wavreads left in line/s:'+ str(wavr_left_line)+'\n')
@@ -85,6 +128,17 @@ def is_a_wav_left (new_file, log_file):
 
     return log_file
 
+def replace_new_wav (line):
+    '''
+    replaces wavread and wavwrite with the new ones
+    in: line (string)
+    out: line (processed line as string)
+    '''
+    if ('new_wavwrite' in line) or ('new_wavread' in line):
+        return line
+    line = re.sub(r'wavread', r'new_wavread', line)
+    line = re.sub(r'wavwrite', r'new_wavwrite', line)
+    return line
 
 
 def processing_files (file_list, log_file):
@@ -105,10 +159,10 @@ def processing_files (file_list, log_file):
 
                 if (one_line == '\n') or (one_line == ''):
                     new_file = new_file + one_line
-'''
-match muss geschrieben werden für wavread und audioread
-'''
-                one_line_pars = replace_all_cases(one_line)
+                    continue
+
+
+                one_line_pars = replace_new_wav(one_line)
 
 
                 if one_line != one_line_pars:
@@ -131,3 +185,9 @@ match muss geschrieben werden für wavread und audioread
             continue
 
     return log_file
+
+if __name__ == "__main__":
+    file_list, cwd = search_for_m()
+    log_file = generate_logfile(cwd)
+    log_file = processing_files(file_list, log_file)
+    write_to_logfile(log_file, cwd)
