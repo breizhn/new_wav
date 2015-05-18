@@ -1,7 +1,7 @@
 function [data, fs, nbits, opt] = new_wavread(filename, additional1, additional2)
 %new_wavread Read Microsoft WAVE (".wav") sound file.
 %   It is a rewritten wavread() by using audioread.
-%   This is the original documentation of wavread().
+%   This is the original documentation of wavread() from MATLAB.
 %   Please note the struct opt which exits as ouptut in the wavread() 
 %   function is not implemnted.
 %   
@@ -59,7 +59,7 @@ function [data, fs, nbits, opt] = new_wavread(filename, additional1, additional2
 %
 %   Supports multi-channel data, with up to 32 bits per sample.
 %   Supports Microsoft PCM data format only.
- 
+
 % Author: Nils L. Westhausen 
 %        (c) TGM @ Jade Hochschule applied licence see LICENCE file.
 %   

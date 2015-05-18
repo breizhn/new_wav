@@ -1,7 +1,6 @@
 function new_wavwrite(data,fs,additional1,additional2)
 %new_wavwrite Write Microsoft WAVE (".wav") sound file.
-%   alternative to wavwrite command with same syntax by using audiowrite.
-%   This is the documentation of the original wavwrite().
+%   alternative to wavwrite command with same syntax by MATLAB.
 %
 %   new_wavwrite(Y,FS,NBITS,WAVEFILE) writes data Y to a Windows WAVE
 %   file specified by the file name WAVEFILE, with a sample rate
