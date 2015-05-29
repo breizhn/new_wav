@@ -1,15 +1,17 @@
 '''
-Author:  Nils Laurens Westhausen
+ Author: Nils L. Westhausen
+       (c) TGM @ Jade Hochschule (MIT license).
 
-Version: 0.9    08.05.15
-
+Version: 0.8.0    08.05.15
+         0.9.0    28.05.15      wav_read changed to wav_read
+                                wav_write changed to wav_write
 
 
 
 
 This script searches for .m files in your cwd and its
 subfolders and tries to find and replace wavwrite and wavread with
-new_wavwrite and new_wavread commands.
+wav_write and wav_read commands.
 There is a log-file created in your cwd with all changes.
 
 Please only use it if you know what your're doing.
@@ -30,8 +32,8 @@ def searching_file_name_exeption(file_path):
     in: file_patch (list)
     out: boolean
     '''
-    exceptions = ['new_wavread.m', 'new_wavreadTest.m', 'new_wavwrite.m',\
-                                                   'new_wavwriteTest.m']
+    exceptions = ['wav_read.m', 'wav_readTest.m', 'wav_write.m',\
+                                                   'wav_writeTest.m']
     #found_exeption = False
 
     for exept in exceptions:
@@ -95,8 +97,8 @@ def is_wav_thing_anywhere(path_m_file):
     '''
     with open(path_m_file, 'r') as m_file:
         content = m_file.read()
-        if (('wavread' in content) and (not 'new_wavread' in content)) or \
-            (('wavwrite' in content) and (not 'new_wavwrite' in content)):
+        if (('wavread' in content) and (not 'wav_read' in content)) or \
+            (('wavwrite' in content) and (not 'wav_write' in content)):
 
             return True
         else:
@@ -115,9 +117,9 @@ def is_a_wav_left (new_file, log_file):
     wavr_left_line = []
     wavw_left_line = []
     for idx, new_line in enumerate(new_lines):
-        if ('wavread' in new_line) and (not 'new_wavread' in new_line):
+        if ('wavread' in new_line) and (not 'wav_read' in new_line):
             wavr_left_line.append(idx+1)
-        if ('wavwrite' in new_line) and (not 'new_wavwrite' in new_line):
+        if ('wavwrite' in new_line) and (not 'wav_write' in new_line):
             wavw_left_line.append(idx+1)
     if wavr_left_line != [] :
         log_file += ('     ' + str(len(wavr_left_line)) + \
@@ -134,10 +136,10 @@ def replace_new_wav (line):
     in: line (string)
     out: line (processed line as string)
     '''
-    if ('new_wavwrite' in line) or ('new_wavread' in line):
+    if ('wav_write' in line) or ('wav_read' in line):
         return line
-    line = re.sub(r'wavread', r'new_wavread', line)
-    line = re.sub(r'wavwrite', r'new_wavwrite', line)
+    line = re.sub(r'wavread', r'wav_read', line)
+    line = re.sub(r'wavwrite', r'wav_write', line)
     return line
 
 
