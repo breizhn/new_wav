@@ -1,4 +1,4 @@
-function wav_write(data,fs,additional1,additional2)
+function wav_write(varargin)
 %wav_write Write Microsoft WAVE (".wav") sound file.
 %   It is a rewritten wavwrite() by using audiowrite.
 %   This is a copy of the original documentation of wavrwrite() from MATLAB.
@@ -62,33 +62,37 @@ function wav_write(data,fs,additional1,additional2)
 % Ver. 1.1.0 input without fs           15-May-2015  NW
 % Ver. 1.2.0 new/old documentation      15-May-2015  NW
 % Ver. 1.3.0 changed name to wav_write  28-May-2015  NW
+% Ver. 1.4.0 changed input to varargin  03-Jun-2015  NW
 %-------------------------------------------------------------------------- 
 switch nargin
-    case 1
-        error('wav_write:notEnoughArgs', 'not enough input arguments')
     case 2
-        additional2 = [];
-        additional1 = [];
-        if isempty(strfind(fs, '.wav'))
-            fs = strcat(fs, '.wav'); 
-        end
+        filename = check_wav_extension(varargin{2});
         % use of audiowrite
-        audiowrite(fs, data ,8000, 'BitsPerSample', 16)
+        audiowrite(filename, varargin{1}, 8000, 'BitsPerSample', 16)
     case 3
-        additional2 = [];
         % checks if .wav extension exists in filename and add it if not
-        if isempty(strfind(additional1, '.wav'))
-            additional1 = strcat(additional1, '.wav'); 
-        end
+        filename = check_wav_extension(varargin{3});
         % use of audiowrite
-        audiowrite(additional1, data ,fs, 'BitsPerSample', 16)
+        audiowrite(filename, varargin{1}, varargin{2}, 'BitsPerSample', 16)
     case 4
-        if isempty(strfind(additional2, '.wav'))
-            additional2 = strcat(additional2, '.wav'); 
-        end
-        audiowrite(additional2, data, fs, 'BitsPerSample', additional1) 
+        % checks if .wav extension exists in filename and add it if not
+        filename = check_wav_extension(varargin{4});
+        % use of audiowrite
+        audiowrite(filename, varargin{1}, varargin{2}, 'BitsPerSample',...
+            varargin{3}) 
+    otherwise
+        error('wav_write:notEnoughArgs', ...
+            'invalid number of input arguements')
 end
-
+% function to check for wav extension, and add it if needed
+function  [filename_wav] = check_wav_extension(filename)
+    if isempty(strfind(filename, '.wav'))
+        filename_wav = strcat(filename, '.wav'); 
+    else
+        filename_wav = filename; 
+    end
+end
+end
 %--------------------Licence ---------------------------------------------
 % Copyright (c) <2015> Nils L. Westhausen
 % Jade University of Applied Sciences 
