@@ -74,7 +74,7 @@ function [data, fs, nbits, opt] = wav_read(varargin)
 % return error if output opt exists
 if nargout == 4
     warning('wav_read:no_opt', 'struct opt is not implemented')
-    opt = struct;
+    opt = struct([]);
 end
 % checks if .wav extension exists in filename and add it if not
 if isempty(strfind(varargin{1}, '.wav'))
