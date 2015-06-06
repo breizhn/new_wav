@@ -1,4 +1,4 @@
-function [data, fs, nbits, opt] = wav_read(filename, additional1, additional2)
+function [data, fs, nbits, opt] = wav_read(varargin)
 %wav_read Read Microsoft WAVE (".wav") sound file.
 %   It is a rewritten wavread() by using audioread.
 %   This is a copy of the original documentation of wavread() from MATLAB.
@@ -68,59 +68,49 @@ function [data, fs, nbits, opt] = wav_read(filename, additional1, additional2)
 % Ver. 1.0.0 first implementation       19-Apr-2015  NW
 % Ver. 1.1.0 new documentation          15-May-2015  NW
 % Ver. 1.2.0 changed name to wav_read   28-May-2015  NW
+% Ver. 1.3.0 changed input to varargin  04-Jun-2015  NW
 %--------------------------------------------------------------------------
 
 % return error if output opt exists
 if nargout == 4
-    error('wav_read:no_opt', 'struct opt is not implemented')
+    warning('wav_read:no_opt', 'struct opt is not implemented')
+    opt = struct;
 end
-
-% sets the not inserted arguments to an empty array
-switch nargin
-    case 2
-        additional2 = [];
-
-    case 1
-        additional1 = [];
-        additional2 = [];
-end
-
 % checks if .wav extension exists in filename and add it if not
-if isempty(strfind(filename, '.wav'))
-    filename = strcat(filename, '.wav');  
+if isempty(strfind(varargin{1}, '.wav'))
+    varargin{1} = strcat(varargin{1}, '.wav');  
 end
 
 % creates nbits out of audioinfo
-nbits = audioinfo(filename);
+nbits = audioinfo(varargin{1});
 nbits = nbits.BitsPerSample;
 
-if isempty(additional1) && isempty(additional2)
-    [data, fs] = audioread(filename);     
-end  
-  
-if isempty(additional2) && isa(additional1, 'char')
-    
-    if strcmp(additional1, 'size')
-        siz = audioinfo(filename); 
+% using audioread for the diffrent possibilities of using wavread
+if length(varargin) == 1
+    [data, fs] = audioread(varargin{1});     
+elseif (length(varargin) == 2) && isa(varargin{2}, 'char')
+    if strcmp(varargin{2}, 'size')
+        siz = audioinfo(varargin{1}); 
         data = [siz.TotalSamples siz.NumChannels];
         fs = siz.SampleRate;
-    end
-    if strcmp(additional1, 'native') || strcmp(additional1, 'double')
-        [data, fs] = audioread(filename, additional1);
-    end
-end
-
-if  isa(additional1, 'double') && (length(additional1) <= 2) && ...
-        not(isempty(additional1))
-    
-    if length(additional1) == 1 
-        additional1 = [1 additional1];
-    end
-    if isempty(additional2)
-        [data, fs] = audioread(filename, additional1);
+    elseif strcmp(varargin{2}, 'native') || strcmp(varargin{2}, 'double')
+        [data, fs] = audioread(varargin{1}, varargin{2});
     else
-        [data, fs] = audioread(filename, additional1, additional2);
+        error('wav_read:invalid_input','invalid input arguements')
+    end
+elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
+        not(isempty(varargin{2}))
+    if length(varargin{2}) == 1 
+        varargin{2} = [1 varargin{2}];
+    end
+    if length(varargin) == 2
+        [data, fs] = audioread(varargin{1}, varargin{2});
+    elseif length(varargin) == 3
+        [data, fs] = audioread(varargin{1}, varargin{2}, varargin{3});
+    else
+        error('wav_read:invalid_input','invalid input arguements')
     end 
+else
+    error('wav_read:invalid_input','invalid input arguements')
 end
-
 end
