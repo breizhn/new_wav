@@ -16,7 +16,7 @@ function [data, fs, nbits, opt] = wav_read(varargin)
 %
 %   [...]=wav_read(FILE,N) returns only the first N samples from each
 %       channel in the file.
-%   [...]=WAVREAD(FILE,[N1 N2]) returns only samples N1 through N2 from
+%   [...]=wav_read(FILE,[N1 N2]) returns only samples N1 through N2 from
 %       each channel in the file.
 %
 %   [Y,...]=wav_read(...,FMT) specifies the data type format of Y used
@@ -103,9 +103,9 @@ elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
     if length(varargin{2}) == 1 
         varargin{2} = [1 varargin{2}];
     end
-    if length(varargin) == 2
+    if (length(varargin) == 2) && (varargin{2}(1) <= varargin{2}(2))
         [data, fs] = audioread(varargin{1}, varargin{2});
-    elseif length(varargin) == 3
+    elseif (length(varargin)) == 3 && (varargin{2}(1) <= varargin{2}(2))
         [data, fs] = audioread(varargin{1}, varargin{2}, varargin{3});
     else
         error('wav_read:invalid_input','invalid input arguements')
