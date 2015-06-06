@@ -96,7 +96,7 @@ elseif (length(varargin) == 2) && isa(varargin{2}, 'char')
     elseif strcmp(varargin{2}, 'native') || strcmp(varargin{2}, 'double')
         [data, fs] = audioread(varargin{1}, varargin{2});
     else
-        error('wav_read:invalid_input','invalid input arguements')
+        error('wav_read:invalid_input', 'invalid input arguements')
     end
 elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
         not(isempty(varargin{2}))
@@ -108,9 +108,9 @@ elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
     elseif (length(varargin)) == 3 && (varargin{2}(1) <= varargin{2}(2))
         [data, fs] = audioread(varargin{1}, varargin{2}, varargin{3});
     else
-        error('wav_read:invalid_input','invalid input arguements')
+        error('wav_read:invalid_input', 'invalid input arguements')
     end 
 else
-    error('wav_read:invalid_input','invalid input arguements')
+    error('wav_read:invalid_input', 'invalid input arguements')
 end
 end
