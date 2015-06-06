@@ -8,6 +8,7 @@
 % Ver. 1.1.0 new testnames              15-May-2015           NW
 % Ver. 1.2.0 added test                 15-May-2015           NW
 % Ver. 1.3.0 changed name to wav_write  28-May-2015           NW
+% Ver. 1.3.1 corrected data comparison  06-Jun-2015           NW
 %------------------------------------------------------------------------- 
 %
 %% Testing of Error returning by calling only with one arguement
@@ -59,7 +60,7 @@ if fs_old ~= fs_new
     error('the sampling rate is not the same')
 end
 
-if any(find(abs(y_old - y_new)> 0.01))
+if ~mean(y_new == y_old)
     error('the data is not equal')
 end
 
@@ -90,7 +91,7 @@ if fs_old ~= fs_new
     error('the sampling rate is not the same')
 end
 
-if any(find(abs(y_old - y_new)> 0.01))
+if ~mean(y_new == y_old)
     error('the data is not equal')
 end
 
@@ -122,7 +123,7 @@ if fs_old ~= fs_new
     error('the sampling rate is not the same')
 end
 
-if any(find(abs(y_old - y_new)> 0.01))
+if ~mean(y_new == y_old)
     error('the data is not equal')
 end
 
