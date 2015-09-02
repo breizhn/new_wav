@@ -2,10 +2,10 @@ function [data, fs, nbits, opt] = wav_read(varargin)
 %wav_read Read Microsoft WAVE (".wav") sound file.
 %   It is a rewritten wavread() by using audioread.
 %   This is a copy of the original documentation of wavread() from MATLAB.
-%   Please note the struct opt which exits as ouptut in the wavread() 
-%   function is not implemnted.
-%   
-% 
+%   Please note the struct opt which exits as output in the wavread()
+%   function is not implemented.
+%
+%
 %   Y=wav_read(FILE) reads a WAVE file specified by the string FILE,
 %   returning the sampled data in Y. The ".wav" extension is appended
 %   if no extension is given.
@@ -60,9 +60,9 @@ function [data, fs, nbits, opt] = wav_read(varargin)
 %   Supports multi-channel data, with up to 32 bits per sample.
 %   Supports Microsoft PCM data format only.
 
-% Author: Nils L. Westhausen 
+% Author: Nils L. Westhausen
 %        (c) TGM @ Jade Hochschule (MIT license).
-%   
+%
 % Version History:
 % Ver. 0.0.0 initial create (empty)     13-Apr-2015  NW
 % Ver. 1.0.0 first implementation       19-Apr-2015  NW
@@ -78,29 +78,29 @@ if nargout == 4
 end
 % checks if .wav extension exists in filename and add it if not
 if isempty(strfind(varargin{1}, '.wav'))
-    varargin{1} = strcat(varargin{1}, '.wav');  
+    varargin{1} = strcat(varargin{1}, '.wav');
 end
 
 % creates nbits out of audioinfo
 nbits = audioinfo(varargin{1});
 nbits = nbits.BitsPerSample;
 
-% using audioread for the diffrent possibilities of using wavread
+% using audioread for the different possibilities of using wavread
 if length(varargin) == 1
-    [data, fs] = audioread(varargin{1});     
+    [data, fs] = audioread(varargin{1});
 elseif (length(varargin) == 2) && isa(varargin{2}, 'char')
     if strcmp(varargin{2}, 'size')
-        siz = audioinfo(varargin{1}); 
-        data = [siz.TotalSamples siz.NumChannels];
-        fs = siz.SampleRate;
+        info = audioinfo(varargin{1});
+        data = [info.TotalSamples info.NumChannels];
+        fs = info.SampleRate;
     elseif strcmp(varargin{2}, 'native') || strcmp(varargin{2}, 'double')
         [data, fs] = audioread(varargin{1}, varargin{2});
     else
-        error('wav_read:invalid_input', 'invalid input arguements')
+        error('wav_read:invalid_input', 'invalid input arguments')
     end
 elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
         not(isempty(varargin{2}))
-    if length(varargin{2}) == 1 
+    if length(varargin{2}) == 1
         varargin{2} = [1 varargin{2}];
     end
     if (length(varargin) == 2) && (varargin{2}(1) <= varargin{2}(2))
@@ -108,9 +108,9 @@ elseif  isa(varargin{2}, 'double') && (length(varargin{2}) <= 2) && ...
     elseif (length(varargin)) == 3 && (varargin{2}(1) <= varargin{2}(2))
         [data, fs] = audioread(varargin{1}, varargin{2}, varargin{3});
     else
-        error('wav_read:invalid_input', 'invalid input arguements')
-    end 
+        error('wav_read:invalid_input', 'invalid input arguments')
+    end
 else
-    error('wav_read:invalid_input', 'invalid input arguements')
+    error('wav_read:invalid_input', 'invalid input arguments')
 end
 end
