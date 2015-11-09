@@ -11,7 +11,7 @@
 % Ver. 1.3.1 corrected data comparison  06-Jun-2015           NW
 %------------------------------------------------------------------------- 
 %
-%% Testing of Error returning by calling only with one arguement
+%% Testing of Error returning by calling only with one argument
 data = randn(1,48000).*0.2;
 try
     wav_write(data);
@@ -25,7 +25,7 @@ catch err
     end
 end
 
-%% Testing of writing without .wav extesion
+%% Testing of writing without .wav extension
 data = randn(1,48000).*0.2;
 filename = 'test';
 fs =48000;

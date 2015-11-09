@@ -4,7 +4,7 @@
 % Version History:
 % Ver. 0.0.0 initial create (empty)       13-Apr-2015           NW
 % Ver. 1.0.0 First Implementation         06-May-2015           NW
-% Ver. 1.1.0 new testnames                15-May-2015           NW
+% Ver. 1.1.0 new test-names               15-May-2015           NW
 % Ver. 1.2.0 changed name to wav_read     28-May-2015           NW
 % Ver. 1.3.0 updated: new input handling  06-Jun-2015           NW
 randn_vec = randn(1,96000);
@@ -12,11 +12,11 @@ max_vec = max(max(randn_vec));
 randn_vec = randn_vec./ max_vec;
 audiowrite('test_audio.wav', randn_vec, 48000)
 %-------------------------------------------------------------------------
-%% Testing returning of empty struct with four output arguements
+%% Testing returning of empty struct with four output arguments
 
 [y, fs, nbits, opt] = wav_read('test_audio.wav');
 if ~isempty(opt) && ~isa('opt','struct')
-    error('not returning empty struct, when called with four output arguements')
+    error('not returning empty struct, when called with four output arguments')
 end
 
 %% Output of wavread(filename) should be the same as wav_read(filename)
@@ -78,7 +78,7 @@ end
 if ~mean(y_new == y_old)
     error('the data is not equal')
 end
-%% Error returning with too much input arguements
+%% Error returning with too much input arguments
 try
     [y_new] = wav_read('test_audio',[1 300],'native','test_what_happens');
 catch err

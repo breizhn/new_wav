@@ -51,7 +51,7 @@ function wav_write(varargin)
 % 
 % Version History:
 % Ver. 0.0.0 initial create (empty)     13-Apr-2015  NW
-% Ver. 1.0.0 first implemntation        10-Apr-2015  NW
+% Ver. 1.0.0 first implementation        10-Apr-2015  NW
 % Ver. 1.1.0 input without fs           15-May-2015  NW
 % Ver. 1.2.0 new/old documentation      15-May-2015  NW
 % Ver. 1.3.0 changed name to wav_write  28-May-2015  NW
@@ -75,9 +75,9 @@ switch nargin
             varargin{3}) 
     otherwise
         error('wav_write:notEnoughArgs', ...
-            'invalid number of input arguements')
+            'invalid number of input arguments')
 end
-% function to check for wav extension, and add it if needed
+% function to check for .wav extension, and add it if needed
 function  [filename_wav] = check_wav_extension(filename)
     if isempty(strfind(filename, '.wav'))
         filename_wav = strcat(filename, '.wav'); 
