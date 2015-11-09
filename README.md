@@ -30,7 +30,7 @@ There is a unit test for each function, which is checking for differences
 between the old `wavread`/`wavwrite` and the new `wav_read`/`wav_write`. To run
 the tests run `runtests('wav_readTest.m')` and `runtests('wav_writeTest.m')` (or
 simply `runtests` in MATLAB > 2015a). The test will not work in MATLAB > R2015b, 
-because `wavread` was removed.
+because `wavread`/`wavwrite` was removed.
 
 ## WAV_to_newWAV.py
 This python Script recursively searches for all `wavread` and `wavwrite`
@@ -44,4 +44,3 @@ backup of the files you want to change.
 ---------------
 This project is licensed under the terms of the MIT license.
 
-Implementation of a wav_read and wav_write with audioread to replace the old Matlab function, which was removed in MATLAB R2015b.
