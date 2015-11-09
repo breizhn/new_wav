@@ -2,11 +2,11 @@
 These are rewritten Functions of `wavread` and `wavwrite` using `audioread` and
 `audiowrite`. They are using the same syntax as the original implementation. For
 further usage information, please look at the original documentation of
-`wavread` and `wavwrite`, which are part of the files.
+`wavread` and `wavwrite`, which is included in the function-files.
 
 ## wav_read
 The function `wav_read` behaves like the original `wavread` except for the
-output `opts` in `wavread`, which is not implemented yet.
+output `opts` in `wavread`, which is not implemented.
 
 
 Usage example:
@@ -16,7 +16,7 @@ Usage example:
 ```
 
 ## wav_write
-The function `wav_write` can be used exactly like the original `wavwrite`.
+The function `wav_write` can be used exactly like `wavwrite`.
 
 Usage:
 ```matlab
@@ -29,7 +29,8 @@ wav_write(y, 'filename')
 There is a unit test for each function, which is checking for differences
 between the old `wavread`/`wavwrite` and the new `wav_read`/`wav_write`. To run
 the tests run `runtests('wav_readTest.m')` and `runtests('wav_writeTest.m')` (or
-simply `runtests` in Matlab > 2015a).
+simply `runtests` in MATLAB > 2015a). The test will not work in MATLAB > R2015b, 
+because `wavread` was removed.
 
 ## WAV_to_newWAV.py
 This python Script recursively searches for all `wavread` and `wavwrite`
@@ -42,3 +43,5 @@ backup of the files you want to change.
 
 ---------------
 This project is licensed under the terms of the MIT license.
+
+Implementation of a wav_read and wav_write with audioread to replace the old Matlab function, which was removed in MATLAB R2015b.
