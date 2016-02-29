@@ -2,7 +2,10 @@
 These are rewritten Functions of `wavread` and `wavwrite` using `audioread` and
 `audiowrite`. They are using the same syntax as the original implementation. For
 further usage information, please look at the original documentation of
-`wavread` and `wavwrite`, which is included in the function-files.
+`wavread` and `wavwrite`, which is included in the function-files. Due to the 
+removal of the old `wavread()`/`wavwrite()` since Matlab R2015b the function 
+was also renamed to `wavread()`/`wavwrite()` to provide an easy usage without 
+renaming.
 
 ## wav_read
 The function `wav_read` behaves like the original `wavread` except for the
@@ -12,7 +15,7 @@ output `opts` in `wavread`, which is not implemented.
 Usage example:
 ```matlab
 [y, fs, nbits] = wav_read(file)
-[size, fs] = wav_read(file, 'size')
+[siz, fs] = wav_read(file, 'size')
 ```
 
 ## wav_write

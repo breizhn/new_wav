@@ -1,5 +1,6 @@
 % Script to test and compare the function wav_write.m with the "old"
-% wavwrite
+% wavwrite. This will only work in Matlab < R2015b and you have to rename the 
+% new function to wav_write().
 % Author: Nils L. Westhausen 
 %        (c) TGM @ Jade Hochschule (MIT license).
 % Version History:
