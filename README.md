@@ -35,14 +35,6 @@ the tests run `runtests('wav_readTest.m')` and `runtests('wav_writeTest.m')` (or
 simply `runtests` in MATLAB > 2015a). The test will not work in MATLAB > R2015b, 
 because `wavread`/`wavwrite` was removed.
 
-## WAV_to_newWAV.py
-This python Script recursively searches for all `wavread` and `wavwrite`
-commands in .m files in your current working directory and subdirectories and
-changes them to `wav_read` and `wav_write`. A log-file is created in the current
-directory, which lists all changes.
-
-Please only use it if you know what your're doing. It is recommended to make an
-backup of the files you want to change.
 
 ---------------
 This project is licensed under the terms of the MIT license.
